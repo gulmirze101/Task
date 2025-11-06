@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace carApp
+{
+    internal class BankAccount
+    {
+        public decimal Balance;
+        
+
+
+        public BankAccount(decimal balance)
+        {
+            Balance = balance;
+         
+        }
+
+        public void deposit(decimal amount)
+        {
+            Balance += amount;
+        }
+
+        public void withdraw(decimal amount)
+        {
+            if (Balance < amount)
+            {
+                Console.WriteLine("Balansinizda kifayet mebleg yoxdur!");
+                return;
+            }
+            Balance -= amount;
+        }
+
+
+        
+    }
+}
