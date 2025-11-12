@@ -132,6 +132,83 @@ for(int i = 0;i < s.Length-1; i++)
 }
 Console.WriteLine(s);*/ //10
 
+/*if (Advance(OrderStatus.Created, OrderAction.Pay, out OrderStatus next))
+    Console.WriteLine(next); 
+else
+    Console.WriteLine("Invalid transition");
+
+if (Advance(OrderStatus.Created, OrderAction.Ship, out next))
+    Console.WriteLine(next);
+else
+    Console.WriteLine("Invalid transition");
+
+
+
+
+static bool Advance(OrderStatus current, OrderAction action, out OrderStatus nextStatus)
+{
+    nextStatus = current; 
+
+    switch (current)
+    {
+        case OrderStatus.Created:
+            if (action == OrderAction.Pay)
+            {
+                nextStatus = OrderStatus.Paid;
+                return true;
+            }
+            else if (action == OrderAction.Cancel)
+            {
+                nextStatus = OrderStatus.Cancelled;
+                return true;
+            }
+            break;
+
+        case OrderStatus.Paid:
+            if (action == OrderAction.Ship)
+            {
+                nextStatus = OrderStatus.Shipped;
+                return true;
+            }
+            else if (action == OrderAction.Cancel)
+            {
+                nextStatus = OrderStatus.Cancelled;
+                return true;
+            }
+            break;
+
+        case OrderStatus.Shipped:
+            if (action == OrderAction.Deliver)
+            {
+                nextStatus = OrderStatus.Delivered;
+                return true;
+            }
+            break;
+
+        case OrderStatus.Delivered:
+        case OrderStatus.Cancelled:
+           
+            break;
+    }
+
+    return false; 
+enum OrderStatus
+{
+    Created,
+    Paid,
+    Shipped,
+    Delivered,
+    Cancelled
+}
+
+enum OrderAction
+{
+    Pay,
+    Ship,
+    Deliver,
+    Cancel
+}
+*/ //11
 
 /*var p1 = new Point2d(1, 1);
 var p2 = p1.Move(2,3);
@@ -218,7 +295,28 @@ class Rectangle : IShape
     }
 }*/ //13
 
+/*Console.WriteLine(ParseOrderStatus("paid")); 
+Console.WriteLine(ParseOrderStatus("foo"));  
+Console.WriteLine(ParseOrderStatus("SHIPPED")); 
 
+
+static OrderStatus? ParseOrderStatus(string input)
+{
+    if (Enum.TryParse<OrderStatus>(input, ignoreCase: true, out var status))
+    {
+        return status;
+    }
+    return null;
+}
+
+enum OrderStatus
+{
+    Created,
+    Paid,
+    Shipped,
+    Delivered,
+    Cancelled
+}*///14
 
 /*List<Product> products = new List<Product> {new Product(1,"Snickers",1.5m), new Product(2,"Tutku",0.6m), new Product(3,"YEMEK",1000.0m)};
 
@@ -246,7 +344,59 @@ public class Product
         Name = name;
         Price = price;
     }
-}*/
+}*///15
+
+/*var ordersByStatus = new Dictionary<OrderStatus, List<Order>>
+        {
+            { OrderStatus.Created, new List<Order> { new Order(1, "A"), new Order(2, "B") } },
+            { OrderStatus.Paid,    new List<Order> { new Order(3, "C"), new Order(4, "D") } },
+            { OrderStatus.Shipped, new List<Order> { new Order(5, "E") } }
+        };
+
+MovePaidToShipped(ordersByStatus);
+
+
+foreach (var kvp in ordersByStatus)
+{
+    Console.WriteLine($"{kvp.Key} ({kvp.Value.Count}): {string.Join(", ", kvp.Value.ConvertAll(o => o.Name))}");
+}
+
+
+
+
+static void MovePaidToShipped(Dictionary<OrderStatus, List<Order>> dict)
+{
+    if (!dict.ContainsKey(OrderStatus.Paid)) return;
+
+    if (!dict.ContainsKey(OrderStatus.Shipped))
+        dict[OrderStatus.Shipped] = new List<Order>();
+
+    List<Order> paidOrders = dict[OrderStatus.Paid];
+
+  
+    dict[OrderStatus.Shipped].AddRange(paidOrders);
+
+    dict[OrderStatus.Paid].Clear();
+}
+class Order
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+
+    public Order(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+}
+enum OrderStatus
+{
+    Created,
+    Paid,
+    Shipped,
+    Delivered,
+    Cancelled
+}*/ //16
 
 /*List<string> strings = new List<string> {"aaaa","aaa","aaaaaaa","bbbb","aaa","acca","AZaaa" };
 HashSet<string> stringss = strings.ToHashSet();
@@ -259,39 +409,9 @@ strings = (strings.OrderBy(x => x).ToList()).Select(x=>x.ToUpper()).ToList();
 foreach(string s in strings)
 {
     Console.WriteLine(s);
-}*/
+}*///17
 
 
-/*List<Product> products = new List<Product> { new Product(1, "Snickers", 1.5m), new Product(2, "Tutku", 0.6m), new Product(3, "YEMEK", 1000.0m) };
-
-string name = "Snickers";
-
-foreach(Product product in products)
-{
-    if(product.Name == name)
-    {
-        Console.WriteLine(product.Price);
-        break;
-    }
-}
-
-
-
-
-
-public class Product
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-
-    public Product(int id, string name, decimal price)
-    {
-        Id = id;
-        Name = name;
-        Price = price;
-    }
-}*/
 
 
 /*List<Student> students = new List<Student>
@@ -322,4 +442,76 @@ public class Student{
     {
         return Grades.Average();
     }
-}*///20
+}*///18
+
+
+/*List<Product> products = new List<Product> { new Product(1, "Snickers", 1.5m), new Product(2, "Tutku", 0.6m), new Product(3, "YEMEK", 1000.0m) };
+
+string name = "Snickers";
+
+foreach(Product product in products)
+{
+    if(product.Name == name)
+    {
+        Console.WriteLine(product.Price);
+        break;
+    }
+}
+
+
+
+
+
+
+
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+
+    public Product(int id, string name, decimal price)
+    {
+        Id = id;
+        Name = name;
+        Price = price;
+    }
+}*///19
+
+
+
+      
+        /*string[] days = {
+            "Bazar ertəsi",
+            "Çərşənbə axşamı",
+            "Çərşənbə",
+            "Cümə axşamı",
+            "Cümə",
+            "Şənbə",
+            "Bazar"
+        };
+
+        double[] temps = new double[7];
+
+
+        for (int i = 0; i < days.Length; i++)
+        {
+            Console.Write($"{days[i]} üçün temperaturu daxil edin: ");
+            temps[i] = double.Parse(Console.ReadLine());
+        }
+
+        double avg = temps.Average();
+
+      
+        double maxTemp = temps.Max();
+        double minTemp = temps.Min();
+
+        int hottestDayIndex = Array.IndexOf(temps, maxTemp);
+        int coldestDayIndex = Array.IndexOf(temps, minTemp);
+
+      
+        Console.WriteLine("\n--- Nəticələr ---");
+        Console.WriteLine($"Orta temperatur: {avg:F1}°C");
+        Console.WriteLine($"Ən isti gün: {days[hottestDayIndex]}, {maxTemp}°C");
+        Console.WriteLine($"Ən soyuq gün: {days[coldestDayIndex]}, {minTemp}°C");
+    */ //20
